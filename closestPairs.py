@@ -1,12 +1,24 @@
 import time as t
 import sys
 
+class Point():
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y
+
 # read the file
 theFile = open(sys.argv[1], "r")
 rawLines = theFile.readlines()
 
 # make an empty array to hold post processed list
 lines = [] 
+points = []
 
 # remove \n's
 for line in rawLines: 
@@ -18,16 +30,25 @@ numOfPoints = lines[0]
 # remove number of points from the array -- make it easier later
 lines.pop(0)
 
-nDivTwo = numOfPoints/2
 
+for line in lines:
+    xy = line.split()
+    x2 = xy
+    y2 = xy
+    y = y2.pop(1)
+    x = x2.pop(0)
+    myPoint = Point(x, y)
+    points.append(myPoint)
 
-# TODO: split up lines into X and Y parts,
-# sort them according to pg 194
+print(points[0].getY())
+
 
 def closestPairs(p,q):
     if numOfPoints <= 3:
+        print('inIf')
         #do brute force!
     else:
+        print('inElse')
         # copy the first ⌈nDivTwo⌉ points of P to array Pl
         # copy the same ⌈nDivTwo⌉ points from Q to array Ql
         # copy the remaining ⌊nDivTwo⌋ points of P to array Pr
@@ -43,3 +64,7 @@ def closestPairs(p,q):
                 # dminsq ← min((S[k].x − S[i].x)2+ (S[k].y − S[i].y)2, dminsq)
                 # k←k+1
     # return sqrt(dminsq)
+
+def bruteForce(p,q):
+    print("doBruteForce")
+    #doBruteForce
