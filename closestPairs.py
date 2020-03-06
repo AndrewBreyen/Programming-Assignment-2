@@ -1,6 +1,8 @@
 import time as t
 import sys
+import math
 
+#define a point
 class Point():
     def __init__(self,x,y):
         self.x = x
@@ -12,50 +14,28 @@ class Point():
     def getY(self):
         return self.y
 
-# read the file
-theFile = open(sys.argv[1], "r")
-rawLines = theFile.readlines()
-
-# make an empty array to hold post processed list
-lines = [] 
-points = []
-
-# remove \n's
-for line in rawLines: 
-    lines.append(line.replace("\n", "")) 
-
-# save the number of points
-numOfPoints = lines[0]
-
-# remove number of points from the array -- make it easier later
-lines.pop(0)
-
-
-for line in lines:
-    xy = line.split()
-    x2 = xy
-    y2 = xy
-    y = y2.pop(1)
-    x = x2.pop(0)
-    myPoint = Point(x, y)
-    points.append(myPoint)
-
-def sortByX(p):
-    return (p.getX())
-
-sorted_list = sorted(points, key=sortByX)
-
-print(sorted_list[0].getX())
-
+#define closestPairs method
+#p: x sorted array of points
+#q: y sorted array of points
 def closestPairs(p,q):
+    n = len(p)
+    nDivTwoCeil = math.ceil(n/2)
+    nDivTwoFloor = math.floor(n/2)
+    pl = []
+    ql = []
     if numOfPoints <= 3:
         print('inIf')
-        for point in points:
-            bruteForce(point.getX, point.getY)
+        #bruteForceIt
     else:
         print('inElse')
         # copy the first ⌈nDivTwo⌉ points of P to array Pl
+        for points in range(nDivTwoCeil):
+            pl.append(points)
+
         # copy the same ⌈nDivTwo⌉ points from Q to array Ql
+        for points in range(nDivTwoCeil):
+            ql.append(points)
+
         # copy the remaining ⌊nDivTwo⌋ points of P to array Pr
         # copy the same ⌊nDivTwo⌋ points from Q to array Qr
         # dl ← closestPairs(Pl, Ql)
@@ -70,6 +50,51 @@ def closestPairs(p,q):
                 # k←k+1
     # return sqrt(dminsq)
 
+#define bruteForce method
 def bruteForce(p,q):
     print("doBruteForce")
     #doBruteForce
+
+# read the file
+theFile = open(sys.argv[1], "r")
+rawLines = theFile.readlines()
+
+# make an empty array to hold post processed list
+lines = [] 
+points = []
+
+# remove \n's
+for line in rawLines: 
+    lines.append(line.replace("\n", "")) 
+
+# save the number of points
+numOfPoints = int(lines[0])
+
+# remove number of points from the array -- make it easier later
+lines.pop(0)
+
+for line in lines:
+    xy = line.split()
+    x2 = xy
+    y2 = xy
+    y = float(y2.pop(1))
+    x = float(x2.pop(0))
+    myPoint = Point(x, y)
+    points.append(myPoint)
+
+def sortByX(p):
+    return (p.getX())
+
+def sortByY(p):
+    return (p.getY())
+
+xSortedPoints = sorted(points, key=sortByX)
+ySortedPoints = sorted(points, key=sortByY)
+
+
+
+###################################
+# BEGIN THE CLOSEST PAIRS PROBLEM #
+###################################
+
+#closestPairs(xSortedPoints, ySortedPoints)
