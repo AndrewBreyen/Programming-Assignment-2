@@ -40,13 +40,18 @@ for line in lines:
     myPoint = Point(x, y)
     points.append(myPoint)
 
-print(points[0].getY())
+def sortByX(p):
+    return (p.getX())
 
+sorted_list = sorted(points, key=sortByX)
+
+print(sorted_list[0].getX())
 
 def closestPairs(p,q):
     if numOfPoints <= 3:
         print('inIf')
-        #do brute force!
+        for point in points:
+            bruteForce(point.getX, point.getY)
     else:
         print('inElse')
         # copy the first ⌈nDivTwo⌉ points of P to array Pl
