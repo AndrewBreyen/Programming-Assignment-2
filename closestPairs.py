@@ -2,6 +2,8 @@ import time as t
 import sys
 import math
 
+infinity = float('inf')
+
 #define a point
 class Point():
     def __init__(self,x,y):
@@ -19,41 +21,42 @@ class Point():
 #q: y sorted array of points
 def closestPairs(p,q):
     n = len(p)
-    nDivTwoCeil = math.ceil(n/2)
-    nDivTwoFloor = math.floor(n/2)
-    pl = []
-    ql = []
-    if numOfPoints <= 3:
-        print('inIf')
-        #bruteForceIt
-    else:
-        print('inElse')
-        # copy the first ⌈nDivTwo⌉ points of P to array Pl
-        for points in range(nDivTwoCeil):
-            pl.append(points)
+    if n <= 3:
+        return bruteForce(p)
+    Pl = p[:n//2]
+    Pr = p[n//2:]
 
-        # copy the same ⌈nDivTwo⌉ points from Q to array Ql
-        for points in range(nDivTwoCeil):
-            ql.append(points)
+    Ql = q[:n//2]
+    Qr = q[n//2:]
 
-        # copy the remaining ⌊nDivTwo⌋ points of P to array Pr
-        # copy the same ⌊nDivTwo⌋ points from Q to array Qr
-        # dl ← closestPairs(Pl, Ql)
-        # dr ← closestPairs(Pr, Qr)
-        # d ←min{dl, dr}
-        # m ← P [⌈nDivTwo⌉ − 1].x
-        # copy all the points of Q for which |x − m| < d into array S[0..num − 1] dminsq ← d2
-        # for i ← 0 to num − 2 do
-            # k←i+1
-            # while k ≤ num − 1 and (S[k].y − S[i].y)2 < dminsq
-                # dminsq ← min((S[k].x − S[i].x)2+ (S[k].y − S[i].y)2, dminsq)
-                # k←k+1
-    # return sqrt(dminsq)
+    Dl = closestPairs(Pl, Ql)
+    Dr = closestPairs(Pr, Qr)
+
+    d = min(Dl, Dr)
+
+    m = p[(math.ceil(n/2))-1].getX()
+
+    s = [p for p in q  if abs(p - m) < d]
+    numS = len(s)
+
+    dminsq = pow(d, 2)
+
+    for i in range(0, numS-2):
+        k = i+1
+        while (k<=numS-1) and (pow((s[k].getY()-s[i].getY()),2)<dminsq):
+            dminsq = min((pow(s[k].getX() - s[i].getX(),2)+pow(s[k].getY() - s[i].getY(),2)),dminsq)
+            k=k+1
+    return math.sqrt(dminsq)
+
+
+        
 
 #define bruteForce method
-def bruteForce(p,q):
-    print("doBruteForce")
-    #doBruteForce
+def bruteForce(p):
+    numPoints = len(p)
+    if numPoints < 2:
+        return null
+    
 
 # read the file
 theFile = open(sys.argv[1], "r")
@@ -97,4 +100,4 @@ ySortedPoints = sorted(points, key=sortByY)
 # BEGIN THE CLOSEST PAIRS PROBLEM #
 ###################################
 
-#closestPairs(xSortedPoints, ySortedPoints)
+closestPairs(xSortedPoints, ySortedPoints)
