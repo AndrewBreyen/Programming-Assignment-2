@@ -2,8 +2,6 @@ import time as t
 import sys
 import math
 
-infinity = float('inf')
-
 #define a point
 class Point():
     def __init__(self,x,y):
@@ -15,6 +13,9 @@ class Point():
 
     def getY(self):
         return self.y
+
+    def __str__(self):
+        return "Point(%s,%s)"%(self.x,self.y)
 
 #define closestPairs method
 #p: x sorted array of points
@@ -34,11 +35,12 @@ def closestPairs(p,q):
 
     d = min(Dl, Dr)
 
-    m = p[(math.ceil(n/2))-1].getX()
+    m = p[int((math.ceil(n/2))-1)].getX()
 
-    s = [p for p in q  if abs(p - m) < d]
+    s = [p for p in q  if abs(p.getX() - m) < d]
     numS = len(s)
 
+    print(Dl)
     dminsq = pow(d, 2)
 
     for i in range(0, numS-2):
@@ -46,17 +48,32 @@ def closestPairs(p,q):
         while (k<=numS-1) and (pow((s[k].getY()-s[i].getY()),2)<dminsq):
             dminsq = min((pow(s[k].getX() - s[i].getX(),2)+pow(s[k].getY() - s[i].getY(),2)),dminsq)
             k=k+1
+
     return math.sqrt(dminsq)
 
 
+def distance(p1, p2):
+    dx = p2.getX() - p1.getX()
+    dy = p2.getY() - p1.getY()
+    dx2 = math.pow(dx, 2)
+    dy2 = math.pow(dy, 2)
+    return math.sqrt(dx2+dy2)
         
 
 #define bruteForce method
 def bruteForce(p):
-    numPoints = len(p)
-    if numPoints < 2:
-        return null
-    
+    min = sys.float_info.max
+    pSize = len(p)
+    for i in range(0, pSize):
+        for j in range(i+1, pSize):
+            if(distance(p[i], p[j] < min)):
+                min = distance(p[i], p[j])
+    return min
+
+
+#####################
+# BEGIN MAIN METHOD #
+#####################
 
 # read the file
 theFile = open(sys.argv[1], "r")
