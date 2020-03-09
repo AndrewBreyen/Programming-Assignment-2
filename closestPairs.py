@@ -126,4 +126,16 @@ ySortedPoints = sorted(points, key=sortByY)
 # BEGIN THE CLOSEST PAIRS PROBLEM #
 ###################################
 
-print(closestPairs(xSortedPoints, ySortedPoints, len(xSortedPoints)))
+# start timer for execution time
+start = t.time()
+
+closestDistance = closestPairs(xSortedPoints, ySortedPoints, len(xSortedPoints))
+
+# end timer for execution time
+end = t.time()
+
+# calculate total execution time
+totalTime = end - start
+
+print("Closest Distance: "+str(closestDistance))
+print("Execution Time: "+str(totalTime))
