@@ -14,6 +14,10 @@ class Point():
     def getY(self):
         return self.y
 
+smallestPoint1 = Point(0,0)
+smallestPoint1 = Point(0,0)
+
+
 #helper method to sort by x coordinates
 #p: a point
 def sortByX(p):
@@ -29,12 +33,16 @@ def sortByY(p):
 #size: size of strip
 #d: minimum distance
 def stripClosest(strip, size, d):
+    global smallestPoint1
+    global smallestPoint2
     min = d
 
     for i in range(0, size):
         j = i+1
         while (j<size and ((strip[j].getY() - strip[i].getY())<min)):
             if(distance(strip[i], strip[j]) < min):
+                smallestPoint1 = strip[i]
+                smallestPoint2 = strip[j]
                 min = distance(strip[i], strip[j])
             j+=1
     
@@ -88,9 +96,13 @@ def distance(p1, p2):
 #n: the number of points in p
 def bruteForce(p, n):
     min = sys.float_info.max
+    global smallestPoint1
+    global smallestPoint2
     for i in range(0, n):
         for j in range(i+1, n):
             if(distance(p[i], p[j]) < min):
+                smallestPoint1 = p[i]
+                smallestPoint2 = p[j]
                 min = distance(p[i], p[j])
     return min
 
@@ -169,7 +181,7 @@ start = t.time()
 #####################################
 #print("Calculating closest pairs...")
 closestDistance = closestPairs(xSortedPoints, ySortedPoints, len(xSortedPoints))
-
+closestDistanceRounded = round(closestDistance, 4)
 
 # end timer for execution time
 #print("Stopping timer...")
@@ -178,8 +190,12 @@ end = t.time()
 # calculate total execution time
 #print("Calculating execution time...")
 totalTime = end - start
+totalTimeRounded = round(totalTime, 4)
 
 print("\n\n###########\n# RESULTS #\n###########")
-print("Closest Distance: "+str(closestDistance))
-print("Execution Time: "+str(totalTime))
-print("Done!\n\n")
+print("Closest Distance: "+str(closestDistanceRounded))
+print("Point1X: "+str(smallestPoint1.getX())+"\tPoint1Y: "+str(smallestPoint1.getY()))
+print("Point2X: "+str(smallestPoint2.getX())+"\tPoint2Y: "+str(smallestPoint2.getY()))
+print("Execution Time: "+str(totalTimeRounded)+" seconds")
+print()
+print("\n\nDone!")
