@@ -1,7 +1,6 @@
 import time as t
 import sys
 import math
-import logging
 
 #define a point
 class Point():
@@ -14,9 +13,6 @@ class Point():
 
     def getY(self):
         return self.y
-
-    def __str__(self):
-        return "Point(%s,%s)"%(self.x,self.y)
 
 #helper method to sort by x coordinates
 #p: a point
@@ -91,7 +87,6 @@ def distance(p1, p2):
 #n: the number of points in p
 def bruteForce(p, n):
     min = sys.float_info.max
-    pSize = len(p)
     for i in range(0, n):
         for j in range(i+1, n):
             if(distance(p[i], p[j]) < min):

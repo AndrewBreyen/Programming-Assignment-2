@@ -1,3 +1,6 @@
+#########################
+#OLD AND DEPRICATED!!!!!#
+#########################
 def closestPairs(p,q):
     n = len(p)
     if n <= 3:
