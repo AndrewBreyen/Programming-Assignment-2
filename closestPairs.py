@@ -33,7 +33,7 @@ def stripClosest(strip, size, d):
 
     for i in range(0, size):
         j = i+1
-        while (j<size and ((strip[j].y - strip[i].y)<min)):
+        while (j<size and ((strip[j].getY() - strip[i].getY())<min)):
             if(distance(strip[i], strip[j]) < min):
                 min = distance(strip[i], strip[j])
             j+=1
@@ -42,8 +42,9 @@ def stripClosest(strip, size, d):
 
 
 #define closestPairs method
-#p: x sorted array of points
-#q: y sorted array of points
+#Px: x sorted array of points
+#Py: y sorted array of points
+#n: number of points in Px
 def closestPairs(Px, Py, n):
 
     if n<=3:
