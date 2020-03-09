@@ -163,7 +163,7 @@ for point in points:
 print("##################\n")
 
 # start timer for execution time
-print("Starting timer...")
+#print("Starting timer...")
 start = t.time()
 
 
@@ -171,16 +171,16 @@ start = t.time()
 #####################################
 # actually do the calculation here! #
 #####################################
-print("Calculating closest pairs...")
+#print("Calculating closest pairs...")
 closestDistance = closestPairs(xSortedPoints, ySortedPoints, len(xSortedPoints))
 
 
 # end timer for execution time
-print("Stopping timer...")
+#print("Stopping timer...")
 end = t.time()
 
 # calculate total execution time
-print("Calculating execution time...")
+#print("Calculating execution time...")
 totalTime = end - start
 
 print("\n\n###########\n# RESULTS #\n###########")
