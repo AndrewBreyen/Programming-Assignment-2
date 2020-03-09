@@ -1,6 +1,7 @@
 import time as t
 import sys
 import math
+import logging
 
 #define a point
 class Point():
@@ -117,30 +118,30 @@ def bruteForce(p, n):
 # BEGIN READ FROM FILE AND FORMAT INTO A LIST #
 
 # read the file
-print("Opening file...")
+#print("Opening file...")
 theFile = open(sys.argv[1], "r")
-print("Reading lines...")
+#print("Reading lines...")
 rawLines = theFile.readlines()
 
 # make an empty array to hold post processed list
-print("Making empty arrays to hold post processed list...")
+#print("Making empty arrays to hold post processed list...")
 lines = [] 
 points = []
 
 # remove \n's
-print("removing \\n's...")
+#print("removing \\n's...")
 for line in rawLines: 
     lines.append(line.replace("\n", "")) 
 
 # save the number of points
-print("Saving the number of points...")
+#print("Saving the number of points...")
 numOfPoints = int(lines[0])
 
 # remove number of points from the list -- make it easier later
-print("Removing the number of points from lines list...")
+#print("Removing the number of points from lines list...")
 lines.pop(0)
 
-print("Create list containg Point objects...")
+#print("Create list containg Point objects...")
 for line in lines:
     xy = line.split()
     x2 = xy
@@ -150,7 +151,7 @@ for line in lines:
     myPoint = Point(x, y)
     points.append(myPoint)
 
-print("Create xSortedPoints and ySortedPoints...")
+#print("Create xSortedPoints and ySortedPoints...")
 xSortedPoints = sorted(points, key=sortByX)
 ySortedPoints = sorted(points, key=sortByY)
 
