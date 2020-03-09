@@ -17,39 +17,48 @@ class Point():
     def __str__(self):
         return "Point(%s,%s)"%(self.x,self.y)
 
+def stripClosest(strip, size, d):
+    min = d
+
+    for i in range(0, size):
+        j = i+1
+        while (j<size and ((strip[j].y - strip[i].y)<min)):
+            if(distance(strip[i], strip[j]) < min):
+                min = distance(strip[i], strip[j])
+            j+=1
+    
+    return min
+
+
 #define closestPairs method
 #p: x sorted array of points
 #q: y sorted array of points
-def closestPairs(p,q):
-    n = len(p)
-    if n <= 3:
-        return bruteForce(p)
-    Pl = p[:n//2]
-    Pr = p[n//2:]
+def closestPairs(Px, Py, n):
 
-    Ql = q[:n//2]
-    Qr = q[n//2:]
+    if n<=3:
+        return bruteForce(Px, n)
 
-    Dl = closestPairs(Pl, Ql)
-    Dr = closestPairs(Pr, Qr)
+    mid = n//2
+    midpoint = Px[mid]
 
-    d = min(Dl, Dr)
+    Pyl = Py[:n//2]
+    Pyr = Py[n//2:]
 
-    m = p[int((math.ceil(n/2))-1)].getX()
+    dl = closestPairs(Px, Pyl, mid)
+    dr = closestPairs(Px, Pyr, n-mid)
 
-    s = [p for p in q  if abs(p.getX() - m) < d]
-    numS = len(s)
+    d = min(dl, dr)
+   
+    strip = [Point] * n
 
-    print(Dl)
-    dminsq = pow(d, 2)
-
-    for i in range(0, numS-2):
-        k = i+1
-        while (k<=numS-1) and (pow((s[k].getY()-s[i].getY()),2)<dminsq):
-            dminsq = min((pow(s[k].getX() - s[i].getX(),2)+pow(s[k].getY() - s[i].getY(),2)),dminsq)
-            k=k+1
-
-    return math.sqrt(dminsq)
+    j = 0
+   
+    for i in range(0, n):
+        if(abs(Py[i].getX() - midpoint.getX()) < d):
+            strip[j] = Py[i]
+            j = j + 1
+    
+    return min(d, stripClosest(strip, j, d))
 
 
 def distance(p1, p2):
@@ -61,12 +70,12 @@ def distance(p1, p2):
         
 
 #define bruteForce method
-def bruteForce(p):
+def bruteForce(p, n):
     min = sys.float_info.max
     pSize = len(p)
-    for i in range(0, pSize):
-        for j in range(i+1, pSize):
-            if(distance(p[i], p[j] < min)):
+    for i in range(0, n):
+        for j in range(i+1, n):
+            if(distance(p[i], p[j]) < min):
                 min = distance(p[i], p[j])
     return min
 
@@ -117,4 +126,4 @@ ySortedPoints = sorted(points, key=sortByY)
 # BEGIN THE CLOSEST PAIRS PROBLEM #
 ###################################
 
-closestPairs(xSortedPoints, ySortedPoints)
+print(closestPairs(xSortedPoints, ySortedPoints, len(xSortedPoints)))
